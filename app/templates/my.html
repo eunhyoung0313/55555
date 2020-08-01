@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'home.css' %}" type='text/css'>
+{% endblock %}
+
+{% block subtitle %}
+    {{user.username}}님의 할 일은 다음과 같습니다.
+{% endblock %}
+
+{% block home %}
+<a class="nav-item2" href="{% url 'home' %}">HOME</a>
+{% endblock %}
+
+{% block content %}
+    <div class="textbox">
+        {% for post in posts %}
+            {% if user.is_authenticated and post.author.pk == user.pk %}
+                <div class="sub_textbox">
+                    <span class="material-icons">notifications_active</span>
+                    <a href="{% url 'detail' post.pk %}">{{post.title}}</a>
+                    <p class="timeuntil">{{post.duedate|timeuntil}} left</p>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+    
+    <br>
+
+    <div class="bottom">
+        <a class="button" href="{% url 'home' %}">홈으로</a>
+        {% if user.is_authenticated and post.author.pk == user.pk %}
+        <a class="button" href="{% url 'new' %}">할 일 추가하기</a>
+        {% endif %}
+    </div>
+
+{% endblock content %}
