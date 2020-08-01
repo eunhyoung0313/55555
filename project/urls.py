@@ -26,7 +26,7 @@ urlpatterns = [
     path('registration/logout',views.logout,name="logout"),
 
     # #social login
-    # path('accounts/',include('allauth.urls')),
+    path('accounts/',include('allauth.urls')),
     
     path('admin/', admin.site.urls),
 	# 아래 코드르 추가해준다.

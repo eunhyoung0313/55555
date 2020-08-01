@@ -142,7 +142,7 @@ def signup(request):
             new_user,
             backend='django.contrib.auth.backends.ModelBackend'
             )
-        return redirect('home')
+        return redirect('index')
 
     return render(request,'registration/signup.html')
 
@@ -168,4 +168,4 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return redirect('home')
+    return redirect('index')

@@ -1,24 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {% block content %}
-        <h1>로그인</h1>
-        
-        {% if error %}
-        <h3 style="color: red;">{{error}}</h3>
-        {% endif %}
+{% block content %}
+{% load static %}
+{% load socialaccount %}
+{% providers_media_js %}
+    <link rel="stylesheet" type="text/css" href="{% static 'login.css'%}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    
+    <div class="login">
+        <div class="category">
+            <h1>로그인</h1>
+        </div>
+        <div class="login-contents">
+            {% if error %}
+            <h3 style="color: red;">{{error}}</h3>
+            {% endif %}
+            <form method="POST" class="form">
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="이름">
+                <input type="password" name="password" placeholder="비밀번호">
+                <a href="{% provider_login_url 'kakao'%}"><div class="kakao"><p><i class="fa fa-comment fa-lg" style="margin-right: 7px;"></i>카카오 계정으로 로그인</p></div></a>
+                <button type="submit">로그인</button>
+            </form>
+        </div> 
+    </div>  
 
-        <form method="POST">
-            {% csrf_token %}
-            <input type="text" name="username" placeholder="이름">
-            <input type="password" name="password" placeholder="비밀번호">
-            <button type="submit">로그인</button>
-        </form>
-    {% endblock content %}
-</body>
-</html>
+ {% endblock content %}
