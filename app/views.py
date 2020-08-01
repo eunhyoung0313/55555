@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from .models import Post, Comment
+from .models import Post, Comment, Study
 import datetime
 from django.contrib.auth.models import User
 from django.contrib import auth
@@ -65,22 +65,33 @@ def contact(request):
 
 #study
 def study(request):
-    return render(request, '5-study.html')
+    posts= Study.objects.all()
 
+    return render(request, '4-study.html', {posts: posts})
+
+# @login_required(login_url = '/registration/login')
 def study_detail(request,post_pk):
-    post=Post.objects.get(pk=post_pk)
+    post=Study.objects.get(pk=post_pk)
 
     if request.method=="POST":
-        Comment.objects.create(
+        Study.objects.create(
             post=post,
             content=request.POST['content'],
-            author=request.user
+            # author=request.user
         )
         return redirect('study_detail',post_pk)
 
-    return render(request, 'study_detail.html', {'post':post})
+    return render(request, '4-study_detail.html', {'post':post})
 
-
+def study_new(request):
+    if request.method == 'POST':
+        new_post = Study.objects.create(
+            title= request.POST['title'],
+            content = request.POST['content'],
+            # author = request.user 
+        )
+        return redirect('study_detail', new_post.pk)
+    return render (request, '4-study_new.html')
 #my
 def my(request):
     posts=Post.objects.all()
@@ -108,7 +119,7 @@ def delete(request,post_pk):
 
     return redirect('home')
 
-@login_required(login_url='/registration/login')
+# @login_required(login_url='/registration/login')
 def delete_comment(request,post_pk,comment_pk):
     comment=Comment.objects.get(pk=comment_pk)
     comment.delete()

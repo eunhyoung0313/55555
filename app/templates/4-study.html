@@ -1,0 +1,8 @@
+<body>
+    {% for post in posts %}
+        <a href ="{% url 'study_detail' post.pk }">
+            {{post.title}}
+        </a>
+    {% endfor %}
+
+        <a href="{% url 'study_new' %}">글쓰러가기</a>

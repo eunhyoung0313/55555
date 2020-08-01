@@ -28,9 +28,9 @@ urlpatterns = [
     # #social login
     # path('accounts/',include('allauth.urls')),
     
-    url('admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
 	# 아래 코드르 추가해준다.
-	url('', index, name='index'),
+	path('', index, name='index'),
     
     #alumni
     path('alumni/',views.alumni,name="alumni"),
@@ -48,7 +48,8 @@ urlpatterns = [
 
     #study
     path('study/',views.study,name="study"),
-    path('study/<int:post_pk>',views.study_detail,name="study_detail"),    
+    path('study/<int:post_pk>',views.study_detail,name="study_detail"),  
+    path('study_new/',views.study_new,name="study_new"),  
     
 
     path('my/',views.my,name="my"),
